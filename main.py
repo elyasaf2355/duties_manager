@@ -28,7 +28,7 @@ Soldiers Duties Managment
 5. Update duty status
 6. Show soldier duties
 {"-" * 40}
-Enter '0' anytime to EXIT
+Enter '0' to EXIT
 {"=" * 40}
         """
     )
