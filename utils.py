@@ -2,9 +2,8 @@
 # utils.py
 # אחריות: פונקציות עזר שחוזרות על עצמן
 # ============================================================================
-from data import data
 
-def find_soldier_by_id(soldier_id: int) -> dict | None:
+def find_soldier_by_id(soldier_id: int, data:list) -> dict | None:
     """
     מחפשת חייל לפי id ומחזירה אותו.
 

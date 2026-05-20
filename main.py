@@ -4,6 +4,7 @@
 # ============================================================================
 from soldier_manager import *
 from duty_manager import *
+from data import data
 
 def show_menu() -> None:
     """
@@ -48,7 +49,7 @@ def get_user_choice() -> str:
     return input("Your choice: ")
 
 
-def handle_add_soldier() -> None:
+def handle_add_soldier(data) -> None:
     """
     מטפלת בתהליך הוספת חייל חדש.
     מקבלת קלט מהמשתמש וקוראת לפונקציות המתאימות.
@@ -71,10 +72,10 @@ Add Soldier
     )
     soldier_name = input("Soldier name: ")
     soldier_id = int(input("Soldier ID: "))
-    add_soldier(soldier_id, soldier_name)
+    add_soldier(soldier_id, soldier_name, data)
 
 
-def handle_remove_soldier() -> None:
+def handle_remove_soldier(data) -> None:
     """
     מטפלת בתהליך הסרת חייל.
     מקבלת קלט מהמשתמש וקוראת לפונקציות המתאימות.
@@ -94,10 +95,10 @@ Remove Soldier
             """
     )
     soldier_id = int(input("Soldier ID: "))
-    remove_soldier(soldier_id)
+    remove_soldier(soldier_id, data)
 
 
-def handle_view_soldiers() -> None:
+def handle_view_soldiers(data) -> None:
     """
     מטפלת בתהליך הצגת כל החיילים.
     קוראת לפונקציה המתאימה ומציגה את התוצאה.
@@ -116,13 +117,13 @@ Soldiers list
 {"=" * 40}
             """
     )
-    soldiers = get_all_soldiers()
+    soldiers = get_all_soldiers(data)
     for i in soldiers:
         print(i)
         print("-" * 100)
 
 
-def handle_add_duty() -> None:
+def handle_add_duty(data) -> None:
     """
     מטפלת בתהליך הוספת תורנות לחייל.
     מקבלת קלט מהמשתמש וקוראת לפונקציות המתאימות.
@@ -145,10 +146,10 @@ Add Duty
     duty_name = input("Duty name: ")
     duty_day = input("Day: ")
 
-    add_duty_to_soldier(soldier_id, duty_name, duty_day)
+    add_duty_to_soldier(soldier_id, duty_name, duty_day, data)
 
 
-def handle_update_duty_status() -> None:
+def handle_update_duty_status(data) -> None:
     """
     מטפלת בתהליך עדכון סטטוס תורנות.
     מקבלת קלט מהמשתמש וקוראת לפונקציות המתאימות.
@@ -170,10 +171,10 @@ Update Duty Status
     soldier_id = int(input("Soldier ID: "))
     duty_name = input("Duty name: ")
     duty_status = input("Status: ")
-    update_duty_status(soldier_id, duty_name, duty_status)
+    update_duty_status(soldier_id, duty_name, duty_status, data)
 
 
-def handle_view_soldier_duties() -> None:
+def handle_view_soldier_duties(data) -> None:
     """
     מטפלת בתהליך הצגת תורנויות של חייל.
     מקבלת קלט מהמשתמש וקוראת לפונקציות המתאימות.
@@ -193,9 +194,21 @@ View Soldiers Duties
             """
     )
     soldier_id = int(input("Soldier ID: "))
-    l = get_soldier_duties(soldier_id)
+    l = get_soldier_duties(soldier_id, data)
     print(l)
 
+def handle_exceptipn(e):
+    print(f"""
+{"\n" * 100}
+{'!' * 40}
+Error Occurred
+{'!' * 40}
+{e}
+{"-" * 40}
+press <ENTER> to continue
+{"-" * 40}
+""")
+    input()
 
 def main() -> None:
     """
@@ -209,23 +222,27 @@ def main() -> None:
     נקודת הכניסה לתוכנית. מנהלת את הזרימה הראשית.
     """
     running = True
+    my_data = data
     while running:
-        show_menu()
-        user_choice = get_user_choice()
-        match user_choice:
-            case '1':
-                handle_add_soldier()
-            case '2':
-                handle_remove_soldier()
-            case '3':
-                handle_view_soldiers()
-            case '4':
-                handle_add_duty()
-            case '5':
-                handle_update_duty_status()
-            case '6':
-                handle_view_soldier_duties()
-            case '0':
-                running = False
+        try:
+            show_menu()
+            user_choice = get_user_choice()
+            match user_choice:
+                case '1':
+                    handle_add_soldier(my_data)
+                case '2':
+                    handle_remove_soldier(my_data)
+                case '3':
+                    handle_view_soldiers(my_data)
+                case '4':
+                    handle_add_duty(my_data)
+                case '5':
+                    handle_update_duty_status(my_data)
+                case '6':
+                    handle_view_soldier_duties(my_data)
+                case '0':
+                    running = False
+        except Exception as e:
+            handle_exceptipn(e)
 
 main()

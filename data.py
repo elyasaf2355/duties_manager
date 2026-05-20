@@ -1,1 +1,1 @@
-data = []
+data = [{"id": 123, "name": "eli", "duties": [{"name": "clean", "day": "sunday", "status": "pending"}]}]

@@ -5,7 +5,7 @@
 from utils import *
 
 
-def add_duty_to_soldier(soldier_id: int, duty_name: str, day: str) -> None:
+def add_duty_to_soldier(soldier_id: int, duty_name: str, day: str, data:list) -> None:
     """
     מוסיפה תורנות חדשה לחייל.
 
@@ -29,7 +29,7 @@ def add_duty_to_soldier(soldier_id: int, duty_name: str, day: str) -> None:
     מבצעת בדיקות ומוסיפה תורנות לחייל.
     זורקת exceptions במקרה של שגיאה במקום להחזיר False.
     """
-    soldier = find_soldier_by_id(soldier_id)
+    soldier = find_soldier_by_id(soldier_id, data)
     if not soldier:
         raise KeyError("Soldier not in system - non exist ID")
     if soldier_has_duty(soldier, duty_name):
@@ -39,7 +39,7 @@ def add_duty_to_soldier(soldier_id: int, duty_name: str, day: str) -> None:
     soldier["duties"].append({"name": duty_name, "day": day, "status": "pending"})
 
 
-def update_duty_status(soldier_id: int, duty_name: str, new_status: str) -> None:
+def update_duty_status(soldier_id: int, duty_name: str, new_status: str, data:list) -> None:
     """
     מעדכנת את הסטטוס של תורנות.
 
@@ -63,7 +63,7 @@ def update_duty_status(soldier_id: int, duty_name: str, new_status: str) -> None
     מבצעת בדיקות ומעדכנת את הסטטוס.
     זורקת exceptions במקרה של שגיאה במקום להחזיר False.
     """
-    soldier = find_soldier_by_id(soldier_id)
+    soldier = find_soldier_by_id(soldier_id, data)
     if not soldier:
         raise KeyError("Soldier not in system - non exist ID")
     if not soldier_has_duty(soldier, duty_name):
@@ -74,7 +74,7 @@ def update_duty_status(soldier_id: int, duty_name: str, new_status: str) -> None
     duty["status"] = new_status
 
 
-def get_soldier_duties(soldier_id: int) -> list:
+def get_soldier_duties(soldier_id: int, data:list) -> list:
     """
     מחזירה את רשימת התורנויות של חייל.
 
@@ -95,7 +95,7 @@ def get_soldier_duties(soldier_id: int) -> list:
     מפרידה בין הנתונים לבין הגישה אליהם.
     זורקת exception אם החייל לא קיים (במקום להחזיר רשימה ריקה).
     """
-    soldier = find_soldier_by_id(soldier_id)
+    soldier = find_soldier_by_id(soldier_id, data)
     if not soldier:
         raise KeyError("Soldier not in system - non exist ID")
     return soldier["duties"]

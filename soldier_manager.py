@@ -3,9 +3,8 @@
 # אחריות: לוגיקה עסקית של ניהול חיילים
 # ============================================================================
 from utils import *
-from data import data
 
-def add_soldier(soldier_id: int, name: str) -> None:
+def add_soldier(soldier_id: int, name: str, data:list) -> None:
     """
     מוסיפה חייל חדש למערכת.
 
@@ -28,14 +27,14 @@ def add_soldier(soldier_id: int, name: str) -> None:
     לא מטפלת בקלט/פלט - רק בלוגיקה.
     זורקת exceptions במקרה של שגיאה במקום להחזיר False.
     """
-    if find_soldier_by_id(soldier_id):
+    if find_soldier_by_id(soldier_id, data):
         raise ValueError("ID already exist in system")
     if not is_valid_name(name):
         raise ValueError("Invalid name")
     data.append({"id": soldier_id, "name": name, "duties": []})
 
 
-def remove_soldier(soldier_id: int) -> None:
+def remove_soldier(soldier_id: int, data:list) -> None:
     """
     מסירה חייל מהמערכת לפי id.
 
@@ -55,13 +54,13 @@ def remove_soldier(soldier_id: int) -> None:
     מבצעת בדיקת קיום ומסירה מהנתונים.
     זורקת exception במקרה שהחייל לא קיים.
     """
-    soldier = find_soldier_by_id(soldier_id)
+    soldier = find_soldier_by_id(soldier_id, data)
     if not soldier:
         raise KeyError("Soldier not in system - non exist ID")
     data.remove(soldier)
 
 
-def get_all_soldiers() -> list:
+def get_all_soldiers(data:list) -> list:
     """
     מחזירה את רשימת כל החיילים במערכת.
 
