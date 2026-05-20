@@ -1,2 +1,9 @@
 .git .gitignore .idea
 __pycache__
+inspectionProfiles
+misc.xml
+modules.xml
+soldiers_duties_managment.iml
+vcs.xml
+workspace.xml
+.idea/
